@@ -53,21 +53,36 @@ namespace Diary
             }
         }
 
+        public T Create<T>(params object[] args) where T : class
+        {
+            if (!typeof(T).IsInterface)
+            {
+                throw new InvalidOperationException("Generic type T must be an interface.");
+            }
+            if (!classDict.ContainsKey(typeof(T)))
+            {
+                throw new MissingMemberException("Interface not found.", typeof(T).ToString());
+            }
+
+            Type objType = classDict[typeof(T)];
+            T obj = (T)Activator.CreateInstance(objType, args);
+            return obj;
+        }
+
         public T Create<T>() where T : class
         {
             if (!typeof(T).IsInterface)
             {
                 throw new InvalidOperationException("Generic type T must be an interface.");
             }
-            if (classDict.ContainsKey(typeof(T)))
-            {
-                Type objType = classDict[typeof(T)];
-                T obj = (T)Activator.CreateInstance(objType);
-                return obj;
-            } else
+            if (!classDict.ContainsKey(typeof(T)))
             {
                 throw new MissingMemberException("Interface not found.", typeof(T).ToString());
             }
+
+            Type objType = classDict[typeof(T)];
+            T obj = (T)Activator.CreateInstance(objType);
+            return obj;
         }
     }
 }
