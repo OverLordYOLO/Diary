@@ -52,6 +52,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="IDiaryConnector.cs" />
+    <Compile Include="IDiaryController.cs" />
+    <Compile Include="IDiaryItem.cs" />
+    <Compile Include="IDiaryService.cs" />
+    <Compile Include="IDiaryView.cs" />
+    <Compile Include="IDiaryViewModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
