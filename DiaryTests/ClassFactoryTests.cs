@@ -12,18 +12,15 @@ namespace Diary.Tests
     [TestClass()]
     public class ClassFactoryTests
     {
-        string XMLSettings = @"<?xml version = ""1.0"" encoding = ""utf-8"" ?>
-                    <root>
-                        <pair>  
-                            <interface>ITestClassWithParams</interface>
-                            <class>TestClassWithParams</class>
-                        </pair>
-                        <pair>  
-                            <interface>ITestClassNoParams</interface>
-                            <class>TestClassNoParams</class>
-                        </pair>
-                    </root>".Replace(Environment.NewLine, "");
-        XDocument settings = XDocument.Parse(@"<?xml version = ""1.0"" encoding = ""utf-8"" ?>
+        XDocument settings;
+        string executingAssemblyName;
+        ClassFactory classFactory;
+
+        [TestInitialize()]
+        public void TestInitialization()
+        {
+            executingAssemblyName = System.Reflection.Assembly.GetExecutingAssembly().FullName;
+            settings = XDocument.Parse(@"<?xml version = ""1.0"" encoding = ""utf-8"" ?>
                     <root>
                         <pair>  
                             <project>Diary.Tests</project>
@@ -36,38 +33,55 @@ namespace Diary.Tests
                             <class>TestClassNoParams</class>
                         </pair>
                     </root>".Replace(Environment.NewLine, ""));
-        string executingAssemblyName = System.Reflection.Assembly.GetExecutingAssembly().FullName;
+            classFactory = new ClassFactory(settings, executingAssemblyName);
+        }
 
         [TestMethod()]
         [TestCategory("Create")]
-        public void AssertCreateFunctionWithParamsCreatesCorrectObject()
+        public void CreateFunctionWithParamsCreatesCorrectObject()
         {
-            ClassFactory classFactory = new ClassFactory(settings, executingAssemblyName);
             int integerParam = 7;
             string textParam = "TEST_STRING";
             ITestClassWithParams etalon_object = new TestClassWithParams(integerParam, textParam);
             ITestClassWithParams created_object = classFactory.Create<ITestClassWithParams>(integerParam, textParam);
 
-            Assert.IsInstanceOfType((TestClassWithParams)created_object, typeof(TestClassWithParams));
-            Assert.AreEqual<ITestClassWithParams>(created_object, etalon_object);
-
-
+            Assert.ReferenceEquals(etalon_object, created_object);
         }
 
         [TestMethod()]
         [TestCategory("Create")]
-        public void AssertCreateFunctionWithoutParamsCreatesCorrectObject()
+        public void CreateFunctionWithoutParamsCreatesCorrectObject()
         {
-            ClassFactory classFactory = new ClassFactory(settings, executingAssemblyName);
-
             ITestClassNoParams etalon_object = new TestClassNoParams();
             ITestClassNoParams created_object = classFactory.Create<ITestClassNoParams>();
 
+            Assert.ReferenceEquals(etalon_object, created_object);
+        }
 
-            Assert.IsInstanceOfType((TestClassNoParams)created_object, typeof(TestClassNoParams));
-            Assert.AreEqual<ITestClassNoParams>(created_object, etalon_object);
+        [TestMethod()]
+        [TestCategory("Create")]
+        public void CreateFunctionWithParams_Object_PropertyDeepCheck()
+        {
+            int integerParam = 7;
+            string textParam = "TEST_STRING";
+            ITestClassWithParams etalon_object = new TestClassWithParams(integerParam, textParam);
+            ITestClassWithParams created_object = classFactory.Create<ITestClassWithParams>(integerParam, textParam);
+
+            Assert.AreEqual(etalon_object.integer, created_object.integer);
+            Assert.AreEqual(etalon_object.text, created_object.text);
+        }
+
+        [TestMethod()]
+        [TestCategory("Create")]
+        public void CreateFunctionWithoutParams_Object_PropertyDeepCheck()
+        {
+            ITestClassNoParams etalon_object = new TestClassNoParams();
+            ITestClassNoParams created_object = classFactory.Create<ITestClassNoParams>();
+
+            Assert.AreEqual(etalon_object.testFunction(), created_object.testFunction());
         }
     }
+
     /// <summary>
     /// Helper classes and interfaces
     /// </summary>
