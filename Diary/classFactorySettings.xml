@@ -1,19 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <root>
-  <element>
+  <pair>
+    <project>Diary</project>
     <interface>IDiaryItem</interface>
     <class>DiaryItem</class>
-  </element>
-  <element>
+  </pair>
+  <pair>
+    <project>Diary</project>
     <interface>IDiaryConnector</interface>
     <class>DiaryConnector</class>
-  </element>
-  <element>
+  </pair>
+  <pair>
+    <project>Diary</project>
     <interface>IDiaryController</interface>
     <class>DiaryController</class>
-  </element>
-  <element>
+  </pair>
+  <pair>
+    <project>Diary</project>
     <interface>IDiaryService</interface>
     <class>DiaryService</class>
-  </element>
+  </pair>
 </root>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Diary
 {
-    interface IDiaryConnector
+    public interface IDiaryConnector
     {
         IDiaryItem Create(IDiaryItem item);
 

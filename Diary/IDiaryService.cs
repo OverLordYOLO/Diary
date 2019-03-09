@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Diary
 {
-    interface IDiaryService
+    public interface IDiaryService
     {
     }
 }

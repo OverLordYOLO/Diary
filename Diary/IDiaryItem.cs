@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Diary
 {
-    interface IDiaryItem
+    public interface IDiaryItem
     {
-        Guid guid { get; set; }
-        string title { get; set; }
-        string description { get; set; }
-        DateTime dateTimeStart { get; set; }
-        DateTime dateTimeEnd { get; set; }
-        string[] labels { get; set; }
+        Guid guid { get; }
+        string title { get; }
+        string description { get; }
+        DateTime dateTimeStart { get; }
+        DateTime dateTimeEnd { get; }
+        string[] labels { get; }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Diary
 {
-    class DiaryViewModel
+    public class DiaryViewModel
     {
     }
 }

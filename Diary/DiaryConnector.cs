@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Diary
 {
-    class DiaryConnector
+    public class DiaryConnector
     {
     }
 }

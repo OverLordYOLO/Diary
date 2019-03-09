@@ -8,30 +8,31 @@ using System.Xml.Linq;
 
 namespace Diary
 {
-    class ClassFactory : IClassFactory
+    public class ClassFactory : IClassFactory
     {
         Dictionary<Type, Type> classDict = new Dictionary<Type, Type>();
 
-        public ClassFactory(XDocument XMLSettings)
+        public ClassFactory(XDocument XMLSettings, string executingAssemblyName)
         {
-            this.LoadSettingsFromFile(XMLSettings);
+            this.LoadSettingsFromXML(XMLSettings, executingAssemblyName);
         }
-
-        private void LoadSettingsFromFile(XDocument XMLSettings)
+        private void LoadSettingsFromXML(XDocument XMLSettings, string executingAssemblyName)
         {
             XElement root = XMLSettings.Root;
-            foreach (XElement settingsPair in root.Elements("element"))
+            foreach (XElement settingsPair in root.Elements("pair"))
             {
+                var projectElement = settingsPair.Element("project");
                 var interfaceElement = settingsPair.Element("interface");
                 var classElement = settingsPair.Element("class");
 
+                var projectName = projectElement.Value;
                 var interfaceName = interfaceElement.Value;
                 var className = classElement.Value;
+                if (projectName == null)
+                    throw new InvalidDataException($"Invalid project name. Project name has to be specified. Project name: \"{projectName}\"");
+                Type interfaceType = Type.GetType($"{projectName}.{interfaceName}, {executingAssemblyName}");
+                Type classType = Type.GetType($"{projectName}.{className}, {executingAssemblyName}");
 
-                var executingAssemblyName = System.Reflection.Assembly.GetExecutingAssembly().FullName;
-
-                Type interfaceType = Type.GetType($"Diary.{interfaceName}, {executingAssemblyName}");
-                Type classType = Type.GetType($"Diary.{className}, {executingAssemblyName}");
                 if (interfaceType == null || classType == null)
                 {
                     var invalidInterface = interfaceType == null;
@@ -65,8 +66,7 @@ namespace Diary
             }
 
             Type objType = classDict[typeof(T)];
-            T obj = (T)Activator.CreateInstance(objType, args);
-            return obj;
+            return (T)Activator.CreateInstance(objType, args);
         }
 
         public T Create<T>() where T : class
@@ -81,8 +81,7 @@ namespace Diary
             }
 
             Type objType = classDict[typeof(T)];
-            T obj = (T)Activator.CreateInstance(objType);
-            return obj;
+            return (T)Activator.CreateInstance(objType);
         }
     }
 }

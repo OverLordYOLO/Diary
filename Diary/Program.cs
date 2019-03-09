@@ -38,7 +38,8 @@ namespace Diary
         static void Main()
         {
             XDocument settingsFromFile = XDocument.Load(@".\classFactorySettings.xml");
-            Global.classFactory = new ClassFactory(settingsFromFile);
+            var executingAssemblyName = System.Reflection.Assembly.GetExecutingAssembly().FullName;
+            Global.classFactory = new ClassFactory(settingsFromFile, executingAssemblyName);
 
 
             Application.EnableVisualStyles();
