@@ -8,5 +8,6 @@ namespace Diary
 {
     interface IDiaryController
     {
+
     }
 }

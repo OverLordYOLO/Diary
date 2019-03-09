@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+  <element>
+    <interface>IDiaryItem</interface>
+    <class>DiaryItem</class>
+  </element>
+  <element>
+    <interface>IDiaryConnector</interface>
+    <class>DiaryConnector</class>
+  </element>
+  <element>
+    <interface>IDiaryController</interface>
+    <class>DiaryController</class>
+  </element>
+  <element>
+    <interface>IDiaryService</interface>
+    <class>DiaryService</class>
+  </element>
+</root>

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Diary
 {
-    interface IDiaryView
+    interface IClassFactory
     {
-        
+        T Create<T>() where T : class;
     }
 }
