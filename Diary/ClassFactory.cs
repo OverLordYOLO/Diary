@@ -62,7 +62,7 @@ namespace Diary
             }
             if (!classDict.ContainsKey(typeof(T)))
             {
-                throw new MissingMemberException("Interface not found.", typeof(T).ToString());
+                throw new MissingMemberException("Interface not found.", typeof(T).FullName);
             }
 
             Type objType = classDict[typeof(T)];
@@ -77,7 +77,7 @@ namespace Diary
             }
             if (!classDict.ContainsKey(typeof(T)))
             {
-                throw new MissingMemberException("Interface not found.", typeof(T).ToString());
+                throw new MissingMemberException("Interface not found.", typeof(T).FullName);
             }
 
             Type objType = classDict[typeof(T)];

@@ -41,6 +41,11 @@ namespace Diary
             var executingAssemblyName = System.Reflection.Assembly.GetExecutingAssembly().FullName;
             Global.classFactory = new ClassFactory(settingsFromFile, executingAssemblyName);
 
+            IDiaryRepository repo = Global.classFactory.Create<IDiaryRepository>(@".\repository.xml");
+            IDiaryConnector connector = Global.classFactory.Create<IDiaryConnector>();
+            IDiaryController controller = Global.classFactory.Create<IDiaryController>();
+            IDiaryService service = Global.classFactory.Create<IDiaryService>();
+
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

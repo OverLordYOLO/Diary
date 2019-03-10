@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Diary
 {
-    public class DiaryService
+    public class DiaryService : IDiaryService
     {
     }
 }

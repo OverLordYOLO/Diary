@@ -20,15 +20,71 @@ namespace Diary
 
         public string title { get; private set; }
 
-        DiaryItem(Guid guid, string title, string description, 
-            DateTime dateTimeStart, DateTime dateTimeEnd, string[] labels)
+        public DiaryItem(Dictionary<string, string[]> args)
         {
-            this.guid = guid;
-            this.title = title;
-            this.description = description;
-            this.dateTimeStart = dateTimeStart;
-            this.dateTimeEnd = dateTimeEnd;
-            this.labels = labels;
+            if (args.ContainsKey("guid"))
+            {
+                this.guid = new Guid(args["guid"][0]);
+            }
+            else
+            {
+                this.guid = new Guid();
+            }
+            if (args.ContainsKey("title"))
+            {
+                this.title = args["title"][0];
+            }
+            else
+            {
+                this.title = "";
+            }
+            if (args.ContainsKey("description"))
+            {
+                this.description = args["description"][0];
+            }
+            else
+            {
+                this.description = "";
+            }
+            if (args.ContainsKey("dateTimeStart"))
+            {
+                this.dateTimeStart = DateTime.Parse(args["dateTimeStart"][0]);
+            }
+            else
+            {
+                throw new ArgumentException("Property dateTimeStart must be passed.", "args");
+            }
+            if (args.ContainsKey("dateTimeEnd"))
+            {
+                this.dateTimeEnd = DateTime.Parse(args["dateTimeEnd"][0]);
+            }
+            else
+            {
+                throw new ArgumentException("Property dateTimeEnd must be passed.", "args");
+            }
+            if (args.ContainsKey("labels"))
+            {
+                this.labels = args["labels"];
+            }
+            else
+            {
+                this.labels = new string[] { "GeneralItem" };
+            }
+
+        }
+        public DiaryItem(IDiaryItem diaryItem)
+        {
+            this.guid = diaryItem.guid;
+            this.title = diaryItem.title;
+            this.description = diaryItem.description;
+            this.dateTimeStart = diaryItem.dateTimeStart;
+            this.dateTimeEnd = diaryItem.dateTimeEnd;
+            this.labels = diaryItem.labels;
+        }
+
+        public object Clone()
+        {
+            return new DiaryItem(this);
         }
     }
 }

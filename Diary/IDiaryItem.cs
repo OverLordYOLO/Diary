@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Diary
 {
-    public interface IDiaryItem
+    public interface IDiaryItem : ICloneable
     {
         Guid guid { get; }
         string title { get; }

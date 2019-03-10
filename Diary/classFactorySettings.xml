@@ -20,4 +20,9 @@
     <interface>IDiaryService</interface>
     <class>DiaryService</class>
   </pair>
+  <pair>
+    <project>Diary</project>
+    <interface>IDiaryRepository</interface>
+    <class>DiaryRepository</class>
+  </pair>
 </root>
